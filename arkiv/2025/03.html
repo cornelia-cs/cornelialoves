@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Mars 2025</title>
+  <link rel="icon" href="../../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <header>
+    <h1>Arkiv: Mars 2025</h1>
+    <nav>
+      <a href="../../index.html">Start</a>
+      <a href="#">Arkiv</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="inläggContainer"></div>
+  </main>
+
+  <script>
+    const container = document.getElementById("inläggContainer");
+    const inlägg = JSON.parse(localStorage.getItem("inlägg") || "[]");
+
+    const filtrerade = inlägg.filter(post => {
+      const datum = new Date(post.datum);
+      return datum.getFullYear() === 2025 && datum.getMonth() === 2;
+    });
+
+    if (filtrerade.length === 0) {
+      container.innerHTML = "<p>Inga inlägg från mars 2025.</p>";
+    } else {
+      filtrerade.reverse().forEach(post => {
+        const el = document.createElement("article");
+        el.innerHTML = `
+          <p><em>${new Date(post.datum).toLocaleString("sv-SE")}</em></p>
+          <p>${post.innehåll.replace(/\n/g, "<br>")}</p>
+        `;
+        container.appendChild(el);
+      });
+    }
+  </script>
+</body>
+</html>

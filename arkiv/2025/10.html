@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <!-- ÄNDRA TITELN HÄR -->
+  <title>Oktober 2025</title>
+  <link rel="icon" href="../../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <header>
+    <!-- ÄNDRA H1-RUBRIKEN HÄR -->
+    <h1>Oktober 2025</h1>
+    <nav>
+      <a href="../../index.html">Start</a>
+      <a href="#">Arkiv</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="inläggContainer"></div>
+  </main>
+
+  <script>
+    const container = document.getElementById("inläggContainer");
+    const inlägg = JSON.parse(localStorage.getItem("inlägg") || "[]");
+
+    const filtrerade = inlägg.filter(post => {
+      const datum = new Date(post.datum);
+      // ÄNDRA ÅR och MÅNADSNUMMER (0=Jan, 1=Feb osv) HÄR
+      return datum.getFullYear() === 2025 && datum.getMonth() === 9;
+    });
+
+    if (filtrerade.length === 0) {
+      // ÄNDRA MEDDELANDE HÄR
+      container.innerHTML = "<p>Inga inlägg från oktober 2025</p>";
+    } else {
+      filtrerade.reverse().forEach(post => {
+        const el = document.createElement("article");
+        el.innerHTML = `
+          <p><em>${new Date(post.datum).toLocaleString("sv-SE")}</em></p>
+          <p>${post.innehåll.replace(/\n/g, "<br>")}</p>
+        `;
+        container.appendChild(el);
+      });
+    }
+  </script>
+</body>
+</html>

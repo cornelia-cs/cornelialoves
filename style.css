@@ -101,3 +101,57 @@ button {
 button:hover {
   background: #a01f60;
 }
+/* ---------------------------------- */
+/* Arkiv-dropdown                     */
+/* ---------------------------------- */
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown > span {
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0 1.5rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fffaf8;
+  border: 1px solid #eec5d8;
+  padding: 1rem;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-year {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.dropdown-months {
+  margin-top: 0.3rem;
+  padding-left: 1rem;
+}
+
+.dropdown-months a {
+  display: block;
+  font-size: 0.95rem;
+  color: #222;
+  text-decoration: none;
+  margin-bottom: 0.3rem;
+}
+
+.dropdown-months a:hover {
+  color: #cc2d7d;
+}

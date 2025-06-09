@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>I'm just a girl</title>
+  <title>cornelia.love</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -10,13 +10,49 @@
   <header>
     <h1>Cornelia Svensson</h1>
     <nav>
-      <a href="index.html">Start</a>
-      <a href="blog.html">Posts</a>
-    </nav>
+  <a href="index.html">Start</a>
+  <div class="dropdown">
+    <span>Arkiv ▾</span>
+    <div class="dropdown-content">
+      <div class="dropdown-year">
+        2025
+        <div class="dropdown-months">
+          <a href="arkiv/2025/01.html">Januari</a>
+          <a href="arkiv/2025/02.html">Februari</a>
+          <a href="arkiv/2025/03.html">Mars</a>
+          <a href="arkiv/2025/04.html">April</a>
+          <a href="arkiv/2025/05.html">Maj</a>
+          <a href="arkiv/2025/06.html">Juni</a>
+          <!-- Lägg till fler månader vid behov -->
+        </div>
+      </div>
+      <!-- Fler år kan läggas till här -->
+    </div>
+  </div>
+</nav>
+
   </header>
 
   <main>
-    <p>Hot and dangerous</p>
+    <div id="inläggContainer"></div>
   </main>
+
+  <script>
+    const container = document.getElementById("inläggContainer");
+    const inlägg = JSON.parse(localStorage.getItem("inlägg") || "[]");
+
+    if (inlägg.length === 0) {
+      container.innerHTML = "<p>Inga inlägg ännu.</p>";
+    } else {
+      inlägg.reverse().forEach(post => {
+        const el = document.createElement("article");
+        el.innerHTML = `
+          <p><em>${new Date(post.datum).toLocaleString("sv-SE")}</em></p>
+          <p>${post.innehåll.replace(/\\n/g, "<br>")}</p>
+        `;
+        container.appendChild(el);
+      });
+    }
+  </script>
 </body>
 </html>
