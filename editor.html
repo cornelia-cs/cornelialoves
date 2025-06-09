@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Skriv nytt inlägg – cornelia.love</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script>
+  const lösen = prompt("Lösenord?");
+  if (lösen !== "caramell404") {
+    document.body.innerHTML = "Nope.";
+    throw new Error("Fel lösenord");
+  }
+</script>
+
+  <h1>Skriv något</h1>
+
+  <textarea id="blogText" placeholder="Det var en gång en tjej..."></textarea>
+  <br>
+  <button onclick="sparaInlägg()">Spara</button>
+
+  <script>
+    function sparaInlägg() {
+      const text = document.getElementById('blogText').value;
+      if (text.trim()) {
+        const inlägg = JSON.parse(localStorage.getItem("inlägg") || "[]");
+        inlägg.push({
+          innehåll: text,
+          datum: new Date().toISOString()
+        });
+        localStorage.setItem("inlägg", JSON.stringify(inlägg));
+        alert("Inlägget sparat!");
+        document.getElementById('blogText').value = "";
+      }
+    }
+  </script>
+</body>
+</html>
