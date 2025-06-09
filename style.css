@@ -1,25 +1,23 @@
-/* ---------------------------------- */
-/* Typsnitt                           */
-/* ---------------------------------- */
+/* ----------------------------- */
+/*          style.css           */
+/* ----------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter:wght@300;400;600&display=swap');
 
-/* ---------------------------------- */
-/* Baslayout                          */
-/* ---------------------------------- */
 body {
   font-family: 'Inter', sans-serif;
   background-color: #fffaf8;
   color: #222;
   margin: 0;
-  padding: 2rem;
-  max-width: 700px;
-  margin-inline: auto;
+  padding: 0;
   line-height: 1.6;
 }
 
-/* ---------------------------------- */
-/* Rubriker                           */
-/* ---------------------------------- */
+header {
+  padding: 3rem 2rem 1rem;
+  max-width: 700px;
+  margin: auto;
+}
+
 h1, h2 {
   font-family: 'Playfair Display', serif;
   font-weight: 400;
@@ -30,29 +28,23 @@ h1, h2 {
 h1 {
   font-size: 3.5rem;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 0;
 }
 
 h2 {
   font-size: 2rem;
 }
 
-/* ---------------------------------- */
-/* Navigation                         */
-/* ---------------------------------- */
 nav {
   background: #ffe8f0;
-  padding: 0.5rem 0;
+  border-top: 1px solid #f4cce1;
+  border-bottom: 1px solid #f4cce1;
   text-align: center;
-  border-bottom: 1px solid #eec5d8;
-  width: 100vw;
-  margin: 0;
-  position: relative;
-  z-index: 1;
+  padding: 0.6rem 0;
 }
 
 nav a {
-  margin: 0 1.5rem;
+  margin: 0 2rem;
   font-size: 1rem;
   color: #222;
   text-decoration: none;
@@ -64,9 +56,12 @@ nav a:hover {
   color: #cc2d7d;
 }
 
-/* ---------------------------------- */
-/* Artikel/Inlägg                     */
-/* ---------------------------------- */
+main {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
 article {
   border-bottom: 1px solid #ddd;
   padding-bottom: 2rem;
@@ -80,9 +75,6 @@ article em {
   margin-bottom: 0.5rem;
 }
 
-/* ---------------------------------- */
-/* Form-element                       */
-/* ---------------------------------- */
 textarea {
   width: 100%;
   height: 200px;
@@ -92,11 +84,9 @@ textarea {
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   background: #fdfdfd;
+  resize: vertical;
 }
 
-/* ---------------------------------- */
-/* Knappar                            */
-/* ---------------------------------- */
 button {
   background: #cc2d7d;
   color: white;
@@ -105,6 +95,7 @@ button {
   font-size: 1rem;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
+  border-radius: 3px;
 }
 
 button:hover {

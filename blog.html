@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <link rel="icon" href="favicon.png" type="image/png">
-
   <meta charset="UTF-8">
-  <title>Mina inlägg – cornelia.love</title>
+  <title>Posts – cornelia.love</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>Senaste</h1>
     <nav>
-  <a href="index.html">Start</a>
-  <a href="blog.html">Posts</a>
-</nav>
+      <a href="index.html">Start</a>
+      <a href="blog.html">Posts</a>
+    </nav>
+  </header>
 
-  <h1>Mina inlägg</h1>
-  <div id="inläggContainer"></div>
+  <main>
+    <div id="inläggContainer"></div>
+  </main>
 
   <script>
     const container = document.getElementById("inläggContainer");
@@ -27,8 +30,7 @@
         const el = document.createElement("article");
         el.innerHTML = `
           <p><em>${new Date(post.datum).toLocaleString("sv-SE")}</em></p>
-          <p>${post.innehåll.replace(/\n/g, "<br>")}</p>
-          <hr>
+          <p>${post.innehåll.replace(/\\n/g, "<br>")}</p>
         `;
         container.appendChild(el);
       });
