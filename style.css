@@ -157,22 +157,12 @@ button:hover {
 }
 /* Editor-specifik styling */
 
-main {
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 0 2rem;
-  font-family: 'Inter', sans-serif;
-  background: #fffaf8;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(204, 45, 125, 0.15);
-}
-
 #toolbar {
-  border: 1px solid #eec5d8;
+  border: 1px solid #ccc;
   background: #ffe8f0;
   padding: 0.5rem;
-  margin-bottom: 0.75rem;
-  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -196,15 +186,15 @@ main {
 }
 
 #editor {
-  border: 1px solid #eec5d8;
+  border: 1px solid #ccc;
   padding: 1rem;
   min-height: 250px;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #fdfdfd;
   overflow-y: auto;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
 }
 
 input[type="date"] {
@@ -212,40 +202,26 @@ input[type="date"] {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 100%;
-  max-width: 200px;
-  margin-top: 0.2rem;
   margin-bottom: 1rem;
+  width: 200px;
 }
 
-button#saveBtn {
+#saveBtn {
   background-color: #cc2d7d;
   color: white;
   border: none;
-  padding: 0.8rem 1.6rem;
-  font-size: 1.1rem;
-  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 0.5rem;
 }
 
-button#saveBtn:hover {
+#saveBtn:hover {
   background-color: #a01f60;
 }
 
-/* Responsivitet */
-@media (max-width: 480px) {
-  #toolbar {
-    justify-content: center;
-  }
-
-  nav a {
-    margin: 0 0.75rem;
-    font-size: 0.9rem;
-  }
-
-  main {
-    padding: 1rem;
-  }
+#message {
+  margin-top: 1rem;
+  font-weight: 600;
 }
