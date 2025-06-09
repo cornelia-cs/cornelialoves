@@ -1,39 +1,147 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Skriv nytt inlägg – cornelia.love</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Enkel styling för toolbar och skrivyta */
+    #toolbar {
+      border: 1px solid #ccc;
+      background: #ffe8f0;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    #toolbar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: background-color 0.25s ease;
+    }
+    #toolbar button:hover, #toolbar button:focus {
+      background-color: #cc2d7d;
+      color: white;
+      outline: none;
+    }
+    #editor {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      min-height: 250px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      border-radius: 4px;
+      background: #fdfdfd;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    input[type="date"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      width: 200px;
+    }
+    #saveBtn {
+      background-color: #cc2d7d;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #saveBtn:hover {
+      background-color: #a01f60;
+    }
+    #message {
+      margin-top: 1rem;
+      color: green;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
-    <script>
+<script>
   const lösen = prompt("Lösenord?");
   if (lösen !== "caramell404") {
-    document.body.innerHTML = "Nope.";
+    document.body.innerHTML = "<p style='color: red; font-weight: bold; font-size: 1.5rem; text-align:center; margin-top: 3rem;'>Nope.</p>";
     throw new Error("Fel lösenord");
   }
 </script>
 
-  <h1>Skriv något</h1>
+  <h1>Skriv nytt inlägg</h1>
 
-  <textarea id="blogText" placeholder="Det var en gång en tjej..."></textarea>
-  <br>
-  <button onclick="sparaInlägg()">Spara</button>
+  <label for="postDatum">Datum:</label><br />
+  <input type="date" id="postDatum" required /><br />
+
+  <div id="toolbar">
+    <button type="button" onclick="execCmd('bold')" title="Fetstil"><b>B</b></button>
+    <button type="button" onclick="execCmd('italic')" title="Kursiv"><i>I</i></button>
+    <button type="button" onclick="execCmd('underline')" title="Understruken">U</button>
+    <button type="button" onclick="execCmd('strikeThrough')" title="Genomstruken">S</button>
+    <button type="button" onclick="execCmd('insertOrderedList')" title="Numrerad lista">1.</button>
+    <button type="button" onclick="execCmd('insertUnorderedList')" title="Punktlista">&bull;</button>
+    <button type="button" onclick="execCmd('formatBlock', '<h1>')" title="Rubrik 1">H1</button>
+    <button type="button" onclick="execCmd('formatBlock', '<h2>')" title="Rubrik 2">H2</button>
+    <button type="button" onclick="execCmd('formatBlock', '<p>')" title="Stycke">P</button>
+    <button type="button" onclick="addLink()" title="Infoga länk">🔗</button>
+    <button type="button" onclick="execCmd('removeFormat')" title="Ta bort formatering">×</button>
+  </div>
+
+  <div id="editor" contenteditable="true" aria-label="Skriv ditt inlägg här..."></div>
+
+  <button id="saveBtn">Spara inlägg</button>
+  <p id="message"></p>
 
   <script>
-    function sparaInlägg() {
-      const text = document.getElementById('blogText').value;
-      if (text.trim()) {
-        const inlägg = JSON.parse(localStorage.getItem("inlägg") || "[]");
-        inlägg.push({
-          innehåll: text,
-          datum: new Date().toISOString()
-        });
-        localStorage.setItem("inlägg", JSON.stringify(inlägg));
-        alert("Inlägget sparat!");
-        document.getElementById('blogText').value = "";
+    const postDatumInput = document.getElementById('postDatum');
+    postDatumInput.valueAsDate = new Date();
+
+    const editor = document.getElementById('editor');
+    const saveBtn = document.getElementById('saveBtn');
+    const message = document.getElementById('message');
+
+    function execCmd(command, value = null) {
+      document.execCommand(command, false, value);
+      editor.focus();
+    }
+
+    function addLink() {
+      const url = prompt('Ange webbadress (URL):', 'https://');
+      if (url) {
+        execCmd('createLink', url);
       }
     }
+
+    saveBtn.addEventListener('click', () => {
+      const datum = postDatumInput.value;
+      const innehåll = editor.innerHTML.trim();
+
+      if (!datum || !innehåll || innehåll === '<br>' || innehåll === '') {
+        message.textContent = 'Fyll i både datum och inlägg.';
+        message.style.color = 'red';
+        return;
+      }
+
+      let inlägg = JSON.parse(localStorage.getItem('inlägg') || '[]');
+      inlägg.push({ datum: datum, innehåll: innehåll });
+      localStorage.setItem('inlägg', JSON.stringify(inlägg));
+
+      message.textContent = 'Inlägget sparades!';
+      message.style.color = 'green';
+
+      postDatumInput.valueAsDate = new Date();
+      editor.innerHTML = '';
+    });
   </script>
 </body>
 </html>
