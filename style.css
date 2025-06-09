@@ -1,6 +1,11 @@
-/* Importera eleganta + moderna typsnitt */
+/* ---------------------------------- */
+/* Typsnitt                           */
+/* ---------------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter:wght@300;400;600&display=swap');
 
+/* ---------------------------------- */
+/* Baslayout                          */
+/* ---------------------------------- */
 body {
   font-family: 'Inter', sans-serif;
   background-color: #fffaf8;
@@ -12,20 +17,29 @@ body {
   line-height: 1.6;
 }
 
+/* ---------------------------------- */
+/* Rubriker                           */
+/* ---------------------------------- */
 h1, h2 {
   font-family: 'Playfair Display', serif;
   font-weight: 400;
-  font-size: 2rem;
   letter-spacing: 0.03em;
   margin-bottom: 0.5em;
 }
 
 h1 {
-  font-size: 2.4rem;
+  font-size: 3.5rem;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
+h2 {
+  font-size: 2rem;
+}
+
+/* ---------------------------------- */
+/* Navigation                         */
+/* ---------------------------------- */
 nav {
   background: #ffe8f0;
   padding: 0.5rem 0;
@@ -35,8 +49,6 @@ nav {
   margin: 0;
   position: relative;
   z-index: 1;
-}
-
 }
 
 nav a {
@@ -52,8 +64,9 @@ nav a:hover {
   color: #cc2d7d;
 }
 
-
-
+/* ---------------------------------- */
+/* Artikel/Inlägg                     */
+/* ---------------------------------- */
 article {
   border-bottom: 1px solid #ddd;
   padding-bottom: 2rem;
@@ -67,6 +80,23 @@ article em {
   margin-bottom: 0.5rem;
 }
 
+/* ---------------------------------- */
+/* Form-element                       */
+/* ---------------------------------- */
+textarea {
+  width: 100%;
+  height: 200px;
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  background: #fdfdfd;
+}
+
+/* ---------------------------------- */
+/* Knappar                            */
+/* ---------------------------------- */
 button {
   background: #cc2d7d;
   color: white;
@@ -79,15 +109,4 @@ button {
 
 button:hover {
   background: #a01f60;
-}
-
-textarea {
-  width: 100%;
-  height: 200px;
-  padding: 1rem;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  background: #fdfdfd;
 }
