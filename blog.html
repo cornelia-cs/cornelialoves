@@ -27,9 +27,16 @@
       container.innerHTML = "<p>Inga inlägg ännu.</p>";
     } else {
       inlägg.reverse().forEach(post => {
+        const dateOptions = { 
+          year: 'numeric', month: '2-digit', day: '2-digit', 
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: false,
+          timeZone: 'Europe/Stockholm' 
+        };
+        const datum = new Date(post.datum).toLocaleString('sv-SE', dateOptions);
         const el = document.createElement("article");
         el.innerHTML = `
-          <p><em>${new Date(post.datum).toLocaleString("sv-SE")}</em></p>
+          <p><em>${datum}</em></p>
           <p>${post.innehåll.replace(/\\n/g, "<br>")}</p>
         `;
         container.appendChild(el);

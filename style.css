@@ -101,6 +101,7 @@ button {
 button:hover {
   background: #a01f60;
 }
+
 /* ---------------------------------- */
 /* Arkiv-dropdown                     */
 /* ---------------------------------- */
@@ -109,7 +110,8 @@ button:hover {
   position: relative;
 }
 
-.dropdown > span {
+.dropdown > span,
+.dropbtn {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -127,6 +129,9 @@ button:hover {
   transform: translateX(-50%);
   white-space: nowrap;
   z-index: 2;
+  border-radius: 4px;
+  box-shadow: 0 8px 16px rgba(204, 45, 125, 0.15);
+  min-width: 150px;
 }
 
 .dropdown:hover .dropdown-content {
@@ -134,14 +139,29 @@ button:hover {
 }
 
 .dropdown-year {
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   position: relative;
+  cursor: default;
+}
+
+.dropdown-year:hover .dropdown-months {
+  display: block;
 }
 
 .dropdown-months {
+  display: none;
   margin-top: 0.3rem;
   padding-left: 1rem;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background: #fffaf8;
+  border: 1px solid #eec5d8;
+  border-radius: 4px;
+  box-shadow: 0 8px 16px rgba(204, 45, 125, 0.15);
+  white-space: nowrap;
+  min-width: 120px;
 }
 
 .dropdown-months a {
@@ -150,13 +170,17 @@ button:hover {
   color: #222;
   text-decoration: none;
   margin-bottom: 0.3rem;
+  font-weight: 400;
+  text-align: left;
+  padding-left: 0.5rem;
 }
 
 .dropdown-months a:hover {
   color: #cc2d7d;
+  background-color: #ffe3f1;
 }
-/* Editor-specifik styling */
 
+/* Editor-specifik styling */
 #toolbar {
   border: 1px solid #ccc;
   background: #ffe8f0;

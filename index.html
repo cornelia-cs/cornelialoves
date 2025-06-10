@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>cornelia.love</title>
-  <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <h1>Cornelia Svensson</h1>
     <nav>
-  <a href="index.html">Start</a>
-  <div class="dropdown">
-    <span>Arkiv ▾</span>
-    <div class="dropdown-content">
-      <div class="dropdown-year">
-        2025
-        <div class="dropdown-months">
-          <a href="arkiv/2025/01.html">Januari</a>
-          <a href="arkiv/2025/02.html">Februari</a>
-          <a href="arkiv/2025/03.html">Mars</a>
-          <a href="arkiv/2025/04.html">April</a>
-          <a href="arkiv/2025/05.html">Maj</a>
-          <a href="arkiv/2025/06.html">Juni</a>
-          <!-- Lägg till fler månader vid behov -->
+      <a href="index.html">Start</a>
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Arkiv ▾</a>
+        <div class="dropdown-content">
+          <div class="dropdown-year">
+            <a href="#" class="year-link">2025</a>
+            <div class="dropdown-months">
+              <a href="arkiv/2025/01.html">Januari</a>
+              <a href="arkiv/2025/02.html">Februari</a>
+              <a href="arkiv/2025/03.html">Mars</a>
+              <a href="arkiv/2025/04.html">April</a>
+              <a href="arkiv/2025/05.html">Maj</a>
+              <a href="arkiv/2025/06.html">Juni</a>
+              <!-- Lägg till fler månader vid behov -->
+            </div>
+          </div>
+          <!-- Fler år kan läggas till här -->
         </div>
       </div>
-      <!-- Fler år kan läggas till här -->
-    </div>
-  </div>
-</nav>
-
+    </nav>
   </header>
 
   <main>
@@ -48,7 +47,7 @@
         const el = document.createElement("article");
         el.innerHTML = `
           <p><em>${new Date(post.datum).toLocaleString("sv-SE")}</em></p>
-          <p>${post.innehåll.replace(/\\n/g, "<br>")}</p>
+          <p>${post.innehåll.replace(/\n/g, "<br>")}</p>
         `;
         container.appendChild(el);
       });
