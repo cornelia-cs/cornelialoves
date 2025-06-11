@@ -2,17 +2,17 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
-  <title>cornelia.love</title>
+  <title>Arkiv – cornelia.love</title>
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>Cornelia Svensson</h1>
+    <h1>Arkiv</h1>
     <nav>
       <a href="index.html">Start</a>
       <div class="dropdown">
-        <a href="arkiv.html" class="dropbtn">Arkiv ▾</a>
+        <a href="arkiv.html" class="dropbtn active">Arkiv ▾</a>
         <div class="dropdown-content">
           <div class="dropdown-year">
             <a href="#" class="year-link">2025</a>
@@ -23,35 +23,27 @@
               <a href="arkiv/2025/04.html">April</a>
               <a href="arkiv/2025/05.html">Maj</a>
               <a href="arkiv/2025/06.html">Juni</a>
-              <!-- Lägg till fler månader vid behov -->
             </div>
           </div>
-          <!-- Fler år kan läggas till här -->
+          <!-- Lägg till fler år vid behov -->
         </div>
       </div>
     </nav>
   </header>
 
   <main>
-    <div id="inläggContainer"></div>
+    <div class="archive-year">
+      <h2>2025</h2>
+      <ul class="archive-months">
+        <li><a href="arkiv/2025/01.html">Januari</a></li>
+        <li><a href="arkiv/2025/02.html">Februari</a></li>
+        <li><a href="arkiv/2025/03.html">Mars</a></li>
+        <li><a href="arkiv/2025/04.html">April</a></li>
+        <li><a href="arkiv/2025/05.html">Maj</a></li>
+        <li><a href="arkiv/2025/06.html">Juni</a></li>
+      </ul>
+    </div>
+    <!-- Lägg till fler år om du vill -->
   </main>
-
-  <script>
-    const container = document.getElementById("inläggContainer");
-    const inlägg = JSON.parse(localStorage.getItem("inlägg") || "[]");
-
-    if (inlägg.length === 0) {
-      container.innerHTML = "<p>Inga inlägg ännu.</p>";
-    } else {
-      inlägg.reverse().forEach(post => {
-        const el = document.createElement("article");
-        el.innerHTML = `
-          <p><em>${new Date(post.datum).toLocaleString("sv-SE")}</em></p>
-          <p>${post.innehåll.replace(/\n/g, "<br>")}</p>
-        `;
-        container.appendChild(el);
-      });
-    }
-  </script>
 </body>
 </html>

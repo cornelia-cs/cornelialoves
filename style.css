@@ -33,6 +33,8 @@ h1 {
 
 h2 {
   font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 nav {
@@ -54,7 +56,8 @@ nav a {
   letter-spacing: 0.03em;
 }
 
-nav a:hover {
+nav a:hover,
+nav a.active {
   color: #cc2d7d;
 }
 
@@ -177,6 +180,45 @@ button:hover {
 .dropdown-months a:hover {
   color: #cc2d7d;
   background-color: #ffe3f1;
+}
+
+/* Arkiv år och månader listning på arkiv.html */
+.archive-year {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.archive-year h2 {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #222;
+  border-left: 4px solid #cc2d7d;
+  padding-left: 0.5rem;
+}
+
+.archive-months {
+  list-style: none;
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 0.5rem 2rem;
+}
+
+.archive-months li a {
+  font-weight: 400;
+  font-size: 1rem;
+  color: #222;
+  text-decoration: none;
+  padding-left: 0.5rem;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.archive-months li a:hover {
+  color: #cc2d7d;
+  text-decoration: underline;
 }
 
 /* Editor-specifik styling */
