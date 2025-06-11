@@ -41,6 +41,8 @@ nav {
   border-bottom: 1px solid #f4cce1;
   text-align: center;
   padding: 0.6rem 0;
+  position: relative;
+  z-index: 10;
 }
 
 nav a {
@@ -123,7 +125,7 @@ button:hover {
   position: absolute;
   background-color: #fffaf8;
   border: 1px solid #eec5d8;
-  padding: 1rem;
+  padding: 1rem 2rem;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -131,37 +133,35 @@ button:hover {
   z-index: 2;
   border-radius: 4px;
   box-shadow: 0 8px 16px rgba(204, 45, 125, 0.15);
-  min-width: 150px;
+  min-width: 300px;
+  display: flex; /* flex för att år + månader ska vara bredvid */
+  gap: 2rem;
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+  display: flex;
 }
 
 .dropdown-year {
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   position: relative;
   cursor: default;
-}
-
-.dropdown-year:hover .dropdown-months {
-  display: block;
+  border-right: 1px solid #222;
+  padding-right: 1.5rem;
+  display: flex;
+  align-items: center;
+  min-width: 60px;
 }
 
 .dropdown-months {
-  display: none;
-  margin-top: 0.3rem;
+  margin-top: 0;
   padding-left: 1rem;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  background: #fffaf8;
-  border: 1px solid #eec5d8;
-  border-radius: 4px;
-  box-shadow: 0 8px 16px rgba(204, 45, 125, 0.15);
-  white-space: nowrap;
-  min-width: 120px;
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  column-gap: 2rem;
+  row-gap: 0.3rem;
+  text-align: left;
 }
 
 .dropdown-months a {
@@ -171,7 +171,6 @@ button:hover {
   text-decoration: none;
   margin-bottom: 0.3rem;
   font-weight: 400;
-  text-align: left;
   padding-left: 0.5rem;
 }
 
