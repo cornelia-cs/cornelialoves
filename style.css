@@ -1,52 +1,125 @@
-/* --- Header --- */
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  background: #fff;
-  color: #222;
+/* === BAS === */
+:root{
+  --line: #f0e6ea;      /* linjer/kantfärg */
 }
 
-.site-header {
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  padding: 1rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  background:#fffafc;
+  color:#2a2a2a;
+  line-height:1.6;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
 }
 
-.main-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 900px;
-  margin: 0 auto;
+/* === HEADER === */
+header,#header{
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  padding:1.2rem 2rem;
+  text-align:center;
 }
 
-.main-nav a {
-  text-decoration: none;
-  color: #111;
-  font-weight: 500;
-  transition: opacity 0.2s;
+header h1,#header h1{
+  font-size:1.6rem;
+  letter-spacing:.5px;
 }
 
-.main-nav a:hover {
-  opacity: 0.6;
+.main-nav{ margin-top:.5rem; }
+.main-nav a{
+  text-decoration:none;
+  color:#555;
+  margin:0 .8rem;
+  font-weight:500;
+  transition:color .2s ease;
+}
+.main-nav a:hover{ color:#e46a7e; }
+.main-nav a[aria-current="page"]{ color:#e46a7e; font-weight:600; }
+
+/* === INNEHÅLL === */
+main{
+  flex:1;
+  max-width:700px;
+  margin:2rem auto;
+  padding:0 1rem;
 }
 
-.main-nav .logo {
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
+h1,h2,h3{ font-family:Georgia,"Times New Roman",serif; color:#111; }
 
-.main-nav ul {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+article.card{
+  background:#fff;
+  border:1px solid #f2dce3;
+  border-radius:10px;
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+  box-shadow:0 2px 4px rgba(0,0,0,.03);
 }
+article.card h2{ margin-bottom:.4rem; }
+article.card a{ text-decoration:none; color:#e46a7e; }
+article.card a:hover{ text-decoration:underline; }
 
-.main-nav a[aria-current="page"] {
-  text-decoration: underline;
+/* === FOOTER === */
+footer{
+  border-top:1px solid var(--line);
+  text-align:center;
+  padding:1rem;
+  font-size:.9rem;
+  color:#777;
+}
+footer a{ color:#e46a7e; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+/* --- Feed & filter + pager --- */
+.filters{ display:flex; gap:.5rem; align-items:center; margin:.6rem 0 1rem; }
+
+.btn{
+  background:#111; color:#fff; border:0; border-radius:10px;
+  padding:.45rem .75rem; cursor:pointer;
+}
+.btn.ghost{ background:#f5f5f5; color:#333; }
+.btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+.card-actions{ display:flex; gap:.5rem; margin-top:.6rem; align-items:center; }
+
+.pager{ display:flex; justify-content:center; margin:1rem 0 2rem; }
+.pager-inner{ display:flex; gap:.8rem; align-items:center; }
+.pager-info{ color:#666; font-size:.95rem; }
+
+.menu{
+  position:absolute; background:#fff; border:1px solid var(--line);
+  border-radius:10px; padding:.6rem .8rem; margin-top:.3rem; display:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.06);
+}
+.menu.show{ display:block; }
+.filter{ position:relative; }
+.menu label{ display:flex; gap:.4rem; align-items:center; padding:.15rem 0; white-space:nowrap; }
+
+.tags{ color:#666; font-size:.9rem; }
+.comment-pill{ font-size:.9rem; color:#666; }
+
+/* === Overlay för kommentarer === */
+.overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.45);
+  display:flex; align-items:flex-start; justify-content:center; padding:6vh 12px;
+}
+.overlay.hidden{ display:none; }
+.overlay-inner{
+  background:#fff; width:min(900px,100%); max-height:88vh; overflow:auto;
+  border-radius:14px; box-shadow:0 20px 60px rgba(0,0,0,.25);
+  padding:16px 18px 22px;
+}
+.overlay-close{
+  border:0; background:transparent; font-size:28px; line-height:1;
+  cursor:pointer; float:right; opacity:.7;
+}
+.overlay-close:hover{ opacity:1; }
+
+/* === Tillgänglighet / fokus === */
+a:focus-visible, .btn:focus-visible, .overlay-close:focus-visible{
+  outline:2px solid #e46a7e;
+  outline-offset:2px;
+  border-radius:8px;
 }
