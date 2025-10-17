@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <title>Cornelia.love – Blogg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="header"></div>
+
+  <main>
+    <h1>Senaste</h1>
+    <article class="card">
+      <h2><a href="/arkiv/2025/10/hej-bloggen.html">Hej bloggen</a></h2>
+      <time datetime="2025-10-17">17 oktober 2025</time>
+      <p>Första inlägget på nya grunden. 🍓</p>
+    </article>
+  </main>
+
+  <script>
+    // Hämta header.html och lägg in den i sidan
+    fetch("/header.html")
+      .then(r => r.text())
+      .then(h => {
+        const el = document.getElementById("header");
+        el.innerHTML = h;
+
+        // Markera aktiv länk i menyn
+        const here = location.pathname.replace(/index\.html$/, "");
+        el.querySelectorAll(".main-nav a").forEach(a => {
+          const p = new URL(a.href).pathname.replace(/index\.html$/, "");
+          if (p === here) a.setAttribute("aria-current", "page");
+        });
+      })
+      .catch(console.error);
+  </script>
+</body>
+</html>

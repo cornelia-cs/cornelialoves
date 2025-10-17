@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <title>Editor – Cornelia.love</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="header"></div>
+  <main>
+    <h1>Editor (kommer snart)</h1>
+    <p>Här kommer du kunna skriva inlägg enklare. Just nu skapar vi inlägg som HTML-filer.</p>
+  </main>
+  <script>
+    fetch("/header.html").then(r=>r.text()).then(h=>{
+      document.getElementById("header").innerHTML=h;
+      document.querySelectorAll(".main-nav a").forEach(a=>{
+        if(new URL(a.href).pathname==="/editor.html") a.setAttribute("aria-current","page");
+      });
+    });
+  </script>
+</body>
+</html>

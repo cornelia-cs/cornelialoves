@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <title>Arkiv – Cornelia.love</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="header"></div>
+
+  <main>
+    <h1>Arkiv</h1>
+
+    <section class="archive-year">
+      <h2>2025</h2>
+      <h3>Oktober</h3>
+      <ul>
+        <li><a href="/arkiv/2025/10/hej-bloggen.html">17 okt – Hej bloggen</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // Hämta header.html och lägg in den i sidan
+    fetch("/header.html")
+      .then(r => r.text())
+      .then(h => {
+        const el = document.getElementById("header");
+        el.innerHTML = h;
+
+        // Markera aktiv länk i menyn
+        el.querySelectorAll(".main-nav a").forEach(a => {
+          if (new URL(a.href).pathname === "/arkiv.html") {
+            a.setAttribute("aria-current", "page");
+          }
+        });
+      })
+      .catch(console.error);
+  </script>
+</body>
+</html>
