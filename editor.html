@@ -7,18 +7,18 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+  <!-- Gemensam header -->
   <div id="header"></div>
-  <main>
+
+  <main class="container">
     <h1>Editor (kommer snart)</h1>
     <p>Här kommer du kunna skriva inlägg enklare. Just nu skapar vi inlägg som HTML-filer.</p>
   </main>
-  <script>
-    fetch("/header.html").then(r=>r.text()).then(h=>{
-      document.getElementById("header").innerHTML=h;
-      document.querySelectorAll(".main-nav a").forEach(a=>{
-        if(new URL(a.href).pathname==="/editor.html") a.setAttribute("aria-current","page");
-      });
-    });
-  </script>
+
+  <!-- Gemensam footer -->
+  <div id="footer"></div>
+
+  <!-- Laddar header/footer och markerar aktiv länk -->
+  <script src="/app.js" defer></script>
 </body>
 </html>

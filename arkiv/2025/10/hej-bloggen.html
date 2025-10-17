@@ -7,19 +7,24 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+  <!-- Gemensam header -->
   <div id="header"></div>
-  <main class="post">
+
+  <main class="post container">
     <header>
       <h1>Hej bloggen</h1>
       <time datetime="2025-10-17">17 oktober 2025</time>
     </header>
+
     <p>Första inlägget på nya strukturen. 🍓</p>
+
     <p><a href="/">← Till startsidan</a> • <a href="/arkiv.html">Arkiv</a></p>
   </main>
-  <script>
-    fetch("/header.html").then(r=>r.text()).then(h=>{
-      document.getElementById("header").innerHTML=h;
-    });
-  </script>
+
+  <!-- Gemensam footer -->
+  <div id="footer"></div>
+
+  <!-- Laddar in header + footer -->
+  <script src="/app.js" defer></script>
 </body>
 </html>

@@ -7,9 +7,10 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+  <!-- Gemensam header -->
   <div id="header"></div>
 
-  <main>
+  <main class="container">
     <h1>Arkiv</h1>
 
     <section class="archive-year">
@@ -21,22 +22,10 @@
     </section>
   </main>
 
-  <script>
-    // Hämta header.html och lägg in den i sidan
-    fetch("/header.html")
-      .then(r => r.text())
-      .then(h => {
-        const el = document.getElementById("header");
-        el.innerHTML = h;
+  <!-- Gemensam footer -->
+  <div id="footer"></div>
 
-        // Markera aktiv länk i menyn
-        el.querySelectorAll(".main-nav a").forEach(a => {
-          if (new URL(a.href).pathname === "/arkiv.html") {
-            a.setAttribute("aria-current", "page");
-          }
-        });
-      })
-      .catch(console.error);
-  </script>
+  <!-- Laddar in header/footer och markerar aktiv meny -->
+  <script src="/app.js" defer></script>
 </body>
 </html>
