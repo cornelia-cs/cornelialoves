@@ -16,6 +16,16 @@
   </main>
 
   <div id="footer"></div>
+
   <script src="/app.js" defer></script>
+  <script src="/feed.js" defer></script>
+
+  <!-- Overlay för kommentarer -->
+  <div id="commentsOverlay" class="overlay hidden" aria-hidden="true">
+    <div class="overlay-inner" role="dialog" aria-modal="true" aria-label="Kommentarer">
+      <button id="overlayClose" class="overlay-close" aria-label="Stäng">×</button>
+      <div id="overlayBody"></div>
+    </div>
+  </div>
 </body>
 </html>
