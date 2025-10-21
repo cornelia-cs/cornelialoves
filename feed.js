@@ -1,63 +1,101 @@
-// feed.js – flöde + filter + kommentarer i overlay + antal + pagination (10/sida)
+// feed.js – flöde + filter i header + overlay-kommentarer + kommentarsantal + pagination (10/sida)
 
-const $ = (sel, root = document) => root.querySelector(sel);
+const $  = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 const state = {
   posts: [],
-  selectedMonths: new Set(), // "YYYY-MM"
-  selectedTags: new Set(),
+  selectedMonths: new Set(),   // "YYYY-MM"
+  selectedTags:   new Set(),
   page: 1,
   pageSize: 10
 };
 
-const REPO = "cornelia-cs/cornelialoves"; // <-- ditt repo
+const REPO = "cornelia-cs/cornelialoves";   // <- ditt repo
+const COMMENTS_LABEL = "comment";           // <- du valde "comment" (inte "comments")
 
+// -------- helpers --------
 const fmtDate = (iso) =>
-  new Date(iso).toLocaleDateString("sv-SE", { year: "numeric", month: "long", day: "numeric" });
+  new Date(iso).toLocaleDateString("sv-SE", { year:"numeric", month:"long", day:"numeric" });
+
 const monthKey = (iso) => iso.slice(0,7);
 
-function uniqueMonths(posts){ return [...new Set(posts.map(p=>monthKey(p.date)))].sort().reverse(); }
-function uniqueTags(posts){ const s=new Set(); posts.forEach(p=>(p.tags||[]).forEach(t=>s.add(t))); return [...s].sort((a,b)=>a.localeCompare(b,"sv")); }
+function uniqueMonths(posts){ return [...new Set(posts.map(p => monthKey(p.date)))].sort().reverse(); }
+function uniqueTags(posts){ const s=new Set(); posts.forEach(p => (p.tags||[]).forEach(t => s.add(t))); return [...s].sort((a,b)=>a.localeCompare(b,"sv")); }
 
 function matchesFilters(p){
   const mOk = state.selectedMonths.size ? state.selectedMonths.has(monthKey(p.date)) : true;
-  const tOk = state.selectedTags.size ? (p.tags||[]).some(t=>state.selectedTags.has(t)) : true;
+  const tOk = state.selectedTags.size   ? (p.tags||[]).some(t => state.selectedTags.has(t)) : true;
   return mOk && tOk;
 }
-function filteredSorted(){ return state.posts.filter(matchesFilters).sort((a,b)=>b.date.localeCompare(a.date)); }
+function filteredSorted(){ return state.posts.filter(matchesFilters).sort((a,b)=> b.date.localeCompare(a.date)); }
 
-// ---------- Filters ----------
-function renderFilters(){
-  const months = uniqueMonths(state.posts);
-  const tags = uniqueTags(state.posts);
-
-  const mMenu = $("#monthMenu");
-  mMenu.innerHTML = months.map(m=>`<label><input type="checkbox" value="${m}" ${state.selectedMonths.has(m)?"checked":""}/> ${m}</label>`).join("");
-
-  const tMenu = $("#tagMenu");
-  tMenu.innerHTML = tags.map(t=>`<label><input type="checkbox" value="${t}" ${state.selectedTags.has(t)?"checked":""}/> ${t}</label>`).join("");
-
-  mMenu.onchange = (e)=>{ const v=e.target.value; e.target.checked?state.selectedMonths.add(v):state.selectedMonths.delete(v); state.page=1; render(); };
-  tMenu.onchange = (e)=>{ const v=e.target.value; e.target.checked?state.selectedTags.add(v):state.selectedTags.delete(v); state.page=1; render(); };
+// Vänta på att headern (inladdad via app.js) finns
+async function waitFor(selector, timeoutMs = 4000){
+  const start = performance.now();
+  return new Promise((resolve, reject)=>{
+    const tick = ()=>{
+      const el = document.querySelector(selector);
+      if (el) return resolve(el);
+      if (performance.now() - start > timeoutMs) return reject(new Error("Timeout: "+selector));
+      requestAnimationFrame(tick);
+    };
+    tick();
+  });
 }
 
-// ---------- Feed ----------
+// -------- Filters (i headern) --------
+function renderFilters(){
+  const months = uniqueMonths(state.posts);
+  const tags   = uniqueTags(state.posts);
+
+  const mMenu = $("#monthMenu");
+  const tMenu = $("#tagMenu");
+  if (!mMenu || !tMenu) return; // om header saknas (skulle inte hända)
+
+  mMenu.innerHTML = months.map(m =>
+    `<label><input type="checkbox" value="${m}" ${state.selectedMonths.has(m)?"checked":""}/> ${m}</label>`
+  ).join("");
+
+  tMenu.innerHTML = tags.map(t =>
+    `<label><input type="checkbox" value="${t}" ${state.selectedTags.has(t)?"checked":""}/> ${t}</label>`
+  ).join("");
+
+  mMenu.onchange = (e)=>{
+    const v = e.target.value;
+    e.target.checked ? state.selectedMonths.add(v) : state.selectedMonths.delete(v);
+    state.page = 1; render();
+  };
+  tMenu.onchange = (e)=>{
+    const v = e.target.value;
+    e.target.checked ? state.selectedTags.add(v) : state.selectedTags.delete(v);
+    state.page = 1; render();
+  };
+}
+
+// -------- Feed (renderar “post-kort”) --------
 function renderFeed(){
-  const cont = $("#feed");
-  const list = filteredSorted();
+  const cont  = $("#feed");
+  const list  = filteredSorted();
   const start = (state.page - 1) * state.pageSize;
   const pageItems = list.slice(start, start + state.pageSize);
 
   cont.innerHTML = pageItems.map((p,i)=>{
     const idx = start + i;
     const countId = `cc-${idx}`;
+
+    const meta = `
+      <p class="meta-line">
+        PUBLICERAT <span class="dot">|</span>
+        ${fmtDate(p.date).toUpperCase()}
+        ${p.tags?.length ? `<span class="dot">|</span> ${p.tags.join(" · ").toUpperCase()}` : ""}
+      </p>`;
+
     return `
       <article class="card">
         <h2><a href="${p.url}">${p.title}</a></h2>
-        <time datetime="${p.date}">${fmtDate(p.date)}</time>
+        ${meta}
         ${p.excerpt ? `<p>${p.excerpt}</p>` : ""}
-        ${p.tags?.length ? `<p class="tags"># ${p.tags.join(" · ")}</p>` : ""}
         <div class="card-actions">
           <a class="btn" href="${p.url}">Öppna</a>
           <button class="btn ghost" data-url="${p.url}">Kommentarer</button>
@@ -67,21 +105,21 @@ function renderFeed(){
     `;
   }).join("");
 
-  // Knappar för overlay
+  // Öppna overlay
   $$("#feed button[data-url]").forEach(btn=>{
     btn.onclick = ()=> openCommentsOverlay(btn.dataset.url);
   });
 
   // Hämta kommentarsantal
   pageItems.forEach((p, i)=>{
-    const countEl = document.getElementById(`cc-${start+i}`);
+    const el = document.getElementById(`cc-${start+i}`);
     fetchCommentCount(p.url).then(n=>{
-      countEl.textContent = `💬 ${n}`;
-    }).catch(()=>{ countEl.textContent = ""; });
+      el.textContent = n ? `💬 ${n}` : `💬 0`;
+    }).catch(()=>{ el.textContent = ""; });
   });
 }
 
-// ---------- Pager ----------
+// -------- Pagination --------
 function renderPager(){
   const pager = $("#pager");
   const total = filteredSorted().length;
@@ -98,6 +136,7 @@ function renderPager(){
       <button class="btn ghost" data-act="next" ${nextDis}>Nästa →</button>
     </div>
   `;
+
   pager.onclick = (e)=>{
     const act = e.target?.dataset?.act;
     if (!act) return;
@@ -108,15 +147,15 @@ function renderPager(){
   };
 }
 
-// ---------- Overlay + Utterances ----------
+// -------- Overlay-kommentarer (Utterances) --------
 let currentUrlInOverlay = null;
 
 function openCommentsOverlay(postUrl){
   const overlay = $("#commentsOverlay");
-  const body = $("#overlayBody");
-  const close = $("#overlayClose");
+  const body    = $("#overlayBody");
+  const close   = $("#overlayClose");
 
-  // rensa om ny url
+  // Ladda rätt tråd
   if (currentUrlInOverlay !== postUrl){
     body.innerHTML = "";
     const s = document.createElement("script");
@@ -124,8 +163,9 @@ function openCommentsOverlay(postUrl){
     s.async = true;
     s.crossOrigin = "anonymous";
     s.setAttribute("repo", REPO);
+    // Viktigt: vi använder "specific term" = själva pathen → funkar även från index-overlay
     s.setAttribute("issue-term", postUrl);
-    s.setAttribute("label", "comments");
+    s.setAttribute("label", COMMENTS_LABEL);
     s.setAttribute("theme", "github-light");
     body.appendChild(s);
     currentUrlInOverlay = postUrl;
@@ -145,11 +185,14 @@ function openCommentsOverlay(postUrl){
   document.onkeydown = (e)=>{ if (e.key === "Escape") onClose(); };
 }
 
-// ---------- Kommentar-ANTAL via GitHub Search API ----------
+// -------- Kommentarsantal (GitHub Search API) --------
+// Vi söker efter issue vars titel innehåller postens PATH (Utterances skapar titel med termen).
 async function fetchCommentCount(postUrl){
-  const q = `repo:${REPO} label:comments in:body "${postUrl}"`;
+  // postUrl är t.ex. "/arkiv/2025/10/hej-bloggen.html"
+  const term = postUrl; // vi använde denna som "specific term" i overlayn
+  const q = `repo:${REPO} label:${COMMENTS_LABEL} in:title "${term}"`;
   const url = `https://api.github.com/search/issues?q=${encodeURIComponent(q)}&per_page=1`;
-  const res = await fetch(url, { headers: { "Accept":"application/vnd.github+json" }});
+  const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" }});
   if (!res.ok) throw new Error("GitHub API fel");
   const data = await res.json();
   if (!data.total_count) return 0;
@@ -157,8 +200,9 @@ async function fetchCommentCount(postUrl){
   return issue.comments ?? 0;
 }
 
-// ---------- Init ----------
+// -------- Init --------
 async function initFeed(){
+  // 1) Ladda inläggsdata
   try{
     const res = await fetch("/posts/posts.json", { cache:"no-store" });
     state.posts = await res.json();
@@ -167,12 +211,23 @@ async function initFeed(){
     state.posts = [];
   }
 
+  // 2) Vänta på att headern är injicerad (Month/Tags-knapparna)
+  try {
+    await waitFor("#monthBtn");
+    await waitFor("#tagBtn");
+  } catch(e) {
+    console.warn("Hittade inte filter-knappar i headern:", e);
+  }
+
+  // 3) Rendera filter + feed + pager
   renderFilters();
   render();
 
-  // Filter-vyer
-  $("#monthBtn").onclick = ()=> $("#monthMenu").classList.toggle("show");
-  $("#tagBtn").onclick   = ()=> $("#tagMenu").classList.toggle("show");
+  // 4) Dropdown-beteende
+  const mb = $("#monthBtn");
+  const tb = $("#tagBtn");
+  if (mb) mb.onclick = () => $("#monthMenu").classList.toggle("show");
+  if (tb) tb.onclick = () => $("#tagMenu").classList.toggle("show");
   document.addEventListener("click", (e)=>{ if(!e.target.closest(".filter")) $$(".menu").forEach(m=>m.classList.remove("show")); });
 }
 

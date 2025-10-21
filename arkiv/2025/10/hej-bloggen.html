@@ -2,29 +2,42 @@
 <html lang="sv">
 <head>
   <meta charset="utf-8" />
-  <title>Hej bloggen – 17 okt 2025</title>
+  <title>Hallå halåå hej – 17 okt 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <!-- Gemensam header -->
   <div id="header"></div>
 
-  <main class="post container">
-    <header>
-      <h1>Hej bloggen</h1>
-      <time datetime="2025-10-17">17 oktober 2025</time>
+  <main class="container post-page">
+    <header class="post-head">
+      <h1>HALLÅ HALÅÅ HEJ</h1>
+      <p class="post-meta">
+        Publicerat <span class="dot">|</span>
+        <time datetime="2025-10-17">17 OKTOBER</time>
+        <span class="dot">|</span>
+        TAGS <span class="dot">|</span> DAILY
+      </p>
     </header>
 
-    <p>Första inlägget på nya strukturen. 🍓</p>
+    <article class="post-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit…</p>
+      <!-- din bild / fler stycken här -->
+    </article>
 
-    <p><a href="/">← Till startsidan</a> • <a href="/arkiv.html">Arkiv</a></p>
+    <section class="post-comments">
+      <script src="https://utteranc.es/client.js"
+        repo="cornelia-cs/cornelialoves"
+        issue-term="pathname"
+        label="comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </section>
   </main>
 
-  <!-- Gemensam footer -->
   <div id="footer"></div>
-
-  <!-- Laddar in header + footer -->
   <script src="/app.js" defer></script>
 </body>
 </html>

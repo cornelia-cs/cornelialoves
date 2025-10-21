@@ -1,13 +1,17 @@
 /* === BAS === */
 :root{
-  --line: #f0e6ea;      /* linjer/kantfärg */
+  --line: #f0e6ea;            /* linjer/kantfärg */
 }
+
+/* (valfritt) vacker serif till loggan
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+*/
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  background:#fffafc;
+  background:#f4efe9;         /* beige bakgrund som i mocken */
   color:#2a2a2a;
   line-height:1.6;
   display:flex;
@@ -15,40 +19,61 @@ body{
   min-height:100vh;
 }
 
-/* === HEADER === */
-header,#header{
-  background:#fff;
-  border-bottom:1px solid var(--line);
-  padding:1.2rem 2rem;
+/* === HEADER (ENBART vår sajt-header) === */
+.site-header .header-wrap{ max-width:1000px; margin:0 auto; padding:28px 18px 10px; }
+
+.logo-big{
+  font-family:"Playfair Display", Georgia, "Times New Roman", serif;
+  font-weight:700;
+  font-size:clamp(3rem,10vw,6.5rem);
+  line-height:1;
+  color:#111;
   text-align:center;
-}
-
-header h1,#header h1{
-  font-size:1.6rem;
   letter-spacing:.5px;
+  text-transform:lowercase;
+  margin:0 0 18px;
 }
 
-.main-nav{ margin-top:.5rem; }
-.main-nav a{
-  text-decoration:none;
-  color:#555;
-  margin:0 .8rem;
-  font-weight:500;
-  transition:color .2s ease;
+/* nav i en rad, gott om luft */
+.main-nav{
+  display:flex; gap:28px; align-items:center; justify-content:center;
+  margin-bottom:18px;
 }
-.main-nav a:hover{ color:#e46a7e; }
-.main-nav a[aria-current="page"]{ color:#e46a7e; font-weight:600; }
 
-/* === INNEHÅLL === */
+/* “Pill”-stil */
+.pill{
+  border-radius:999px;
+  padding:.7rem 1.6rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.nav-link.pill{
+  background:#f6f4f2; color:#111; text-decoration:none; border:2px solid #111;
+}
+.btn.ghost.pill{
+  background:#f6f4f2; color:#111; border:2px solid #111;
+}
+.pill:hover{ opacity:.92; }
+
+/* tunn linje under headern */
+.header-rule{ border:0; border-top:2px solid #111; margin:18px 0 0; }
+
+/* Dropdown-menyer under knapparna */
+.filter{ position:relative; }
+.menu{ margin-top:.45rem; }
+
+/* === INNEHÅLL (standard) === */
 main{
   flex:1;
-  max-width:700px;
+  max-width:700px;            /* startsidans bredd */
   margin:2rem auto;
   padding:0 1rem;
 }
 
 h1,h2,h3{ font-family:Georgia,"Times New Roman",serif; color:#111; }
 
+/* Kort för feed (index) */
 article.card{
   background:#fff;
   border:1px solid #f2dce3;
@@ -72,7 +97,7 @@ footer{
 footer a{ color:#e46a7e; text-decoration:none; }
 footer a:hover{ text-decoration:underline; }
 
-/* --- Feed & filter + pager --- */
+/* --- Feed & filter + pager (delad) --- */
 .filters{ display:flex; gap:.5rem; align-items:center; margin:.6rem 0 1rem; }
 
 .btn{
@@ -90,11 +115,10 @@ footer a:hover{ text-decoration:underline; }
 
 .menu{
   position:absolute; background:#fff; border:1px solid var(--line);
-  border-radius:10px; padding:.6rem .8rem; margin-top:.3rem; display:none;
+  border-radius:10px; padding:.6rem .8rem; display:none;
   box-shadow:0 8px 18px rgba(0,0,0,.06);
 }
 .menu.show{ display:block; }
-.filter{ position:relative; }
 .menu label{ display:flex; gap:.4rem; align-items:center; padding:.15rem 0; white-space:nowrap; }
 
 .tags{ color:#666; font-size:.9rem; }
@@ -117,9 +141,80 @@ footer a:hover{ text-decoration:underline; }
 }
 .overlay-close:hover{ opacity:1; }
 
+/* === Post-sida (enskilt inlägg) === */
+.post-page{ max-width:1000px; }
+.post-head{ margin:28px 0 14px; }
+.post-head h1{ font-size:clamp(1.8rem,4vw,2.4rem); text-transform:uppercase; letter-spacing:.04em; }
+.post-meta{ text-transform:uppercase; letter-spacing:.06em; color:#333; font-size:.92rem; }
+.post-meta .dot{ margin:0 .6rem; color:#999; }
+
+/* Bred rektangel utan rundade hörn */
+.post-content{
+  background:#fff;
+  border:1px solid #cfc8c2;
+  border-radius:0;
+  padding:18px 20px;
+  line-height:1.75;
+}
+.post-content p + p{ margin-top:.9rem; }
+
 /* === Tillgänglighet / fokus === */
 a:focus-visible, .btn:focus-visible, .overlay-close:focus-visible{
   outline:2px solid #e46a7e;
   outline-offset:2px;
   border-radius:8px;
+}
+/* === Startsida (feed) ska matcha post-layout === */
+.home { max-width: 1000px; }
+
+.page-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  color: #111;
+  text-align: left;
+  margin: 1.5rem 0 1rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Postkort i feeden */
+.home .card {
+  border: 1px solid #cfc8c2;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 24px 28px;
+  margin-bottom: 2rem;
+  background: #fff;
+}
+
+/* Rubrik i kortet */
+.home .card h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  margin-bottom: .4rem;
+}
+
+/* Meta-rad under rubrik */
+.home .meta-line {
+  text-transform: uppercase;
+  font-size: .9rem;
+  letter-spacing: .06em;
+  color: #333;
+  margin-bottom: .8rem;
+}
+
+.home .meta-line .dot {
+  margin: 0 .6rem;
+  color: #999;
+}
+
+/* Kortinnehåll */
+.home .card p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-top: .5rem;
+  color: #333;
 }

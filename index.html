@@ -7,46 +7,15 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <!-- Gemensam header -->
   <div id="header"></div>
 
-  <main class="container">
-    <h1>Posts</h1>
-
-    <!-- Filter-menyer -->
-    <div class="filters">
-      <div class="filter">
-        <button id="monthBtn" class="btn ghost">Month ▾</button>
-        <div id="monthMenu" class="menu"></div>
-      </div>
-      <div class="filter">
-        <button id="tagBtn" class="btn ghost">Tags ▾</button>
-        <div id="tagMenu" class="menu"></div>
-      </div>
-    </div>
-
-    <!-- Själva flödet -->
+  <main class="container home">
+    <h1 class="page-title">Posts</h1>
     <div id="feed"></div>
-
-    <!-- Pagination -->
     <nav id="pager" class="pager"></nav>
   </main>
 
-  <!-- Gemensam footer -->
   <div id="footer"></div>
-
-  <!-- Script för att ladda header + footer -->
   <script src="/app.js" defer></script>
-
-  <!-- Script för flödet -->
-  <script src="/feed.js" defer></script>
-
-  <!-- Overlay för kommentarer -->
-  <div id="commentsOverlay" class="overlay hidden" aria-hidden="true">
-    <div class="overlay-inner" role="dialog" aria-modal="true" aria-label="Kommentarer">
-      <button id="overlayClose" class="overlay-close" aria-label="Stäng">×</button>
-      <div id="overlayBody"></div>
-    </div>
-  </div>
 </body>
 </html>
