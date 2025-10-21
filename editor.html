@@ -2,23 +2,108 @@
 <html lang="sv">
 <head>
   <meta charset="utf-8" />
-  <title>Editor – Cornelia.love</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cornelia Editor — Publicera inlägg</title>
   <link rel="stylesheet" href="/style.css" />
+  <style>
+    body { background: #f9f5ef; color: #222; font-family: serif; }
+    .editor-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+    .row { margin-bottom: 1rem; }
+    label { font-weight: 600; display: block; margin-bottom: 0.25rem; }
+    input[type="text"], input[type="date"], textarea {
+      width: 100%; padding: .6rem; border: 1px solid #ddd;
+      border-radius: 8px; font: inherit;
+    }
+    textarea { min-height: 220px; }
+    .btn {
+      padding: .6rem 1rem; border: 1px solid #e4d9cc; border-radius: 10px;
+      background: #fff; cursor: pointer;
+    }
+    .btn.primary { border-color: #a63a3a; background: #a63a3a; color: #fff; }
+    .muted { opacity: .7; }
+    .card { background: #fff; border: 1px solid #e4d9cc; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .inline { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+    .help { font-size: .9rem; opacity: .8; }
+    .img-list { display: flex; flex-direction: column; gap: .25rem; margin-top: .5rem; }
+    code { background: #f5f2ee; padding: .25rem .5rem; border-radius: 4px; font-size: .85rem; }
+  </style>
 </head>
 <body>
-  <!-- Gemensam header -->
   <div id="header"></div>
 
-  <main class="container">
-    <h1>Editor (kommer snart)</h1>
-    <p>Här kommer du kunna skriva inlägg enklare. Just nu skapar vi inlägg som HTML-filer.</p>
+  <main class="editor-wrap">
+    <h1>Cornelia Editor</h1>
+    <p class="muted">Skriv inlägg, ladda upp bilder och publicera direkt till GitHub.</p>
+
+    <div class="card">
+      <div class="row">
+        <label for="token">GitHub token (fine-grained, endast till ditt blogg-repo)</label>
+        <input id="token" type="text" placeholder="ghp_..." />
+        <div class="inline">
+          <button id="saveToken" class="btn">Spara token</button>
+          <button id="clearToken" class="btn">Rensa token</button>
+          <span id="tokenStatus" class="muted"></span>
+        </div>
+        <p class="help">Skapa i GitHub: Settings → Developer settings → Fine-grained tokens → ge endast Contents: Read & Write för ditt repo.</p>
+      </div>
+      <div class="split">
+        <div class="row">
+          <label for="owner">Repo owner</label>
+          <input id="owner" type="text" value="cornelia-cs" />
+        </div>
+        <div class="row">
+          <label for="repo">Repo name</label>
+          <input id="repo" type="text" value="cornelialoves" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <label for="title">Titel</label>
+        <input id="title" type="text" placeholder="Skriv titel här" />
+      </div>
+      <div class="split">
+        <div class="row">
+          <label for="date">Datum</label>
+          <input id="date" type="date" />
+        </div>
+        <div class="row">
+          <label for="tags">Taggar (komma-separerat)</label>
+          <input id="tags" type="text" placeholder="vardag, intro" />
+        </div>
+      </div>
+      <div class="row">
+        <label for="slug">Slug (URL-del)</label>
+        <input id="slug" type="text" placeholder="autogenereras från titel" />
+        <p class="help">Exempel: <code>sondagsmorgon</code> → blir <code>/arkiv/2025/10/sondagsmorgon.html</code></p>
+      </div>
+      <div class="row">
+        <label for="content">Innehåll</label>
+        <textarea id="content" placeholder="Skriv hela inlägget här. Du kan använda enkel HTML (t.ex. <p>…</p>, <strong>…</strong>)."></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Bilder</h3>
+      <p class="help">Välj bilder så laddas de upp till <code>/img/ÅÅÅÅ/MM/</code>. Du får färdiga <img>-taggar att klistra in.</p>
+      <input id="images" type="file" accept="image/*" multiple />
+      <div class="inline">
+        <button id="uploadImages" class="btn">Ladda upp bilder</button>
+        <span id="imgStatus" class="muted"></span>
+      </div>
+      <div id="imgList" class="img-list"></div>
+    </div>
+
+    <div class="inline">
+      <button id="publish" class="btn primary">Publicera</button>
+      <span id="pubStatus" class="muted"></span>
+    </div>
   </main>
 
-  <!-- Gemensam footer -->
   <div id="footer"></div>
-
-  <!-- Laddar header/footer och markerar aktiv länk -->
   <script src="/app.js" defer></script>
+  <script src="/editor.js" type="module"></script>
 </body>
 </html>

@@ -11,24 +11,59 @@ const state = {
   pageSize: 10
 };
 
-const REPO = "cornelia-cs/cornelialoves";   // <- ditt repo
-const COMMENTS_LABEL = "comment";           // <- du valde "comment" (inte "comments")
+const REPO = "cornelia-cs/cornelialoves";   // <- ditt GitHub-repo för Utterances
+const COMMENTS_LABEL = "comment";           // <- se till att labeln "comment" finns i repot (Issues → Labels)
 
 // -------- helpers --------
+
+// Läs filter/sida från URL:en (ex: ?month=2025-10&tag=vardag&page=2)
+function readURLState(){
+  const u = new URL(location.href);
+  const months = u.searchParams.getAll("month");
+  const tags   = u.searchParams.getAll("tag");
+  const page   = parseInt(u.searchParams.get("page") || "1", 10);
+  state.selectedMonths = new Set(months);
+  state.selectedTags   = new Set(tags);
+  state.page = Number.isFinite(page) && page > 0 ? page : 1;
+}
+
+// Skriv nuvarande filter/sida till URL:en (utan sidladdning)
+function writeURLState(){
+  const u = new URL(location.href);
+  u.searchParams.delete("month");
+  u.searchParams.delete("tag");
+  state.selectedMonths.forEach(m => u.searchParams.append("month", m));
+  state.selectedTags.forEach(t => u.searchParams.append("tag", t));
+  u.searchParams.set("page", String(state.page));
+  history.replaceState(null, "", u.toString());
+}
+
 const fmtDate = (iso) =>
   new Date(iso).toLocaleDateString("sv-SE", { year:"numeric", month:"long", day:"numeric" });
 
 const monthKey = (iso) => iso.slice(0,7);
 
-function uniqueMonths(posts){ return [...new Set(posts.map(p => monthKey(p.date)))].sort().reverse(); }
-function uniqueTags(posts){ const s=new Set(); posts.forEach(p => (p.tags||[]).forEach(t => s.add(t))); return [...s].sort((a,b)=>a.localeCompare(b,"sv")); }
+function uniqueMonths(posts){
+  return [...new Set(posts.map(p => monthKey(p.date)))].sort().reverse();
+}
+
+function uniqueTags(posts){
+  const s = new Set();
+  posts.forEach(p => (p.tags || []).forEach(t => s.add(t)));
+  return [...s].sort((a,b)=>a.localeCompare(b,"sv"));
+}
 
 function matchesFilters(p){
   const mOk = state.selectedMonths.size ? state.selectedMonths.has(monthKey(p.date)) : true;
   const tOk = state.selectedTags.size   ? (p.tags||[]).some(t => state.selectedTags.has(t)) : true;
   return mOk && tOk;
 }
-function filteredSorted(){ return state.posts.filter(matchesFilters).sort((a,b)=> b.date.localeCompare(a.date)); }
+
+function filteredSorted(){
+  return state.posts
+    .filter(matchesFilters)
+    .sort((a,b)=> b.date.localeCompare(a.date)); // nyaste först
+}
 
 // Vänta på att headern (inladdad via app.js) finns
 async function waitFor(selector, timeoutMs = 4000){
@@ -51,11 +86,13 @@ function renderFilters(){
 
   const mMenu = $("#monthMenu");
   const tMenu = $("#tagMenu");
-  if (!mMenu || !tMenu) return; // om header saknas (skulle inte hända)
+  if (!mMenu || !tMenu) return; // om header saknas (borde inte hända)
 
-  mMenu.innerHTML = months.map(m =>
-    `<label><input type="checkbox" value="${m}" ${state.selectedMonths.has(m)?"checked":""}/> ${m}</label>`
-  ).join("");
+  // Visa "oktober 2025" istället för "2025-10"
+  mMenu.innerHTML = months.map(m => {
+    const label = new Date(`${m}-01`).toLocaleDateString("sv-SE", { year:"numeric", month:"long" });
+    return `<label><input type="checkbox" value="${m}" ${state.selectedMonths.has(m)?"checked":""}/> ${label}</label>`;
+  }).join("");
 
   tMenu.innerHTML = tags.map(t =>
     `<label><input type="checkbox" value="${t}" ${state.selectedTags.has(t)?"checked":""}/> ${t}</label>`
@@ -63,13 +100,17 @@ function renderFilters(){
 
   mMenu.onchange = (e)=>{
     const v = e.target.value;
+    if (!v) return;
     e.target.checked ? state.selectedMonths.add(v) : state.selectedMonths.delete(v);
-    state.page = 1; render();
+    state.page = 1;
+    render();
   };
   tMenu.onchange = (e)=>{
     const v = e.target.value;
+    if (!v) return;
     e.target.checked ? state.selectedTags.add(v) : state.selectedTags.delete(v);
-    state.page = 1; render();
+    state.page = 1;
+    render();
   };
 }
 
@@ -115,7 +156,10 @@ function renderFeed(){
     const el = document.getElementById(`cc-${start+i}`);
     fetchCommentCount(p.url).then(n=>{
       el.textContent = n ? `💬 ${n}` : `💬 0`;
-    }).catch(()=>{ el.textContent = ""; });
+      el.title = "Kommentarsantal hämtat från GitHub";
+    }).catch(()=>{
+      el.textContent = "";
+    });
   });
 }
 
@@ -163,7 +207,7 @@ function openCommentsOverlay(postUrl){
     s.async = true;
     s.crossOrigin = "anonymous";
     s.setAttribute("repo", REPO);
-    // Viktigt: vi använder "specific term" = själva pathen → funkar även från index-overlay
+    // Viktigt: vi använder själva URL:en som term → funkar från index-overlay
     s.setAttribute("issue-term", postUrl);
     s.setAttribute("label", COMMENTS_LABEL);
     s.setAttribute("theme", "github-light");
@@ -191,6 +235,8 @@ async function fetchCommentCount(postUrl){
   // postUrl är t.ex. "/arkiv/2025/10/hej-bloggen.html"
   const term = postUrl; // vi använde denna som "specific term" i overlayn
   const q = `repo:${REPO} label:${COMMENTS_LABEL} in:title "${term}"`;
+  // Om du INTE vill kräva labeln, byt raden ovan till:
+  // const q = `repo:${REPO} in:title "${term}"`;
   const url = `https://api.github.com/search/issues?q=${encodeURIComponent(q)}&per_page=1`;
   const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" }});
   if (!res.ok) throw new Error("GitHub API fel");
@@ -205,7 +251,7 @@ async function initFeed(){
   // 1) Ladda inläggsdata
   try{
     const res = await fetch("/posts/posts.json", { cache:"no-store" });
-    state.posts = await res.json();
+    state.posts = await res.json(); // förväntar sig en array
   }catch(e){
     console.error("Kunde inte läsa posts.json", e);
     state.posts = [];
@@ -219,11 +265,12 @@ async function initFeed(){
     console.warn("Hittade inte filter-knappar i headern:", e);
   }
 
-  // 3) Rendera filter + feed + pager
+  // 3) Läs ev. filter/sida från URL, rita filter + feed + pager
+  readURLState();
   renderFilters();
   render();
 
-  // 4) Dropdown-beteende
+  // 4) Dropdown-beteende (öppna/stäng menyerna)
   const mb = $("#monthBtn");
   const tb = $("#tagBtn");
   if (mb) mb.onclick = () => $("#monthMenu").classList.toggle("show");
@@ -231,6 +278,10 @@ async function initFeed(){
   document.addEventListener("click", (e)=>{ if(!e.target.closest(".filter")) $$(".menu").forEach(m=>m.classList.remove("show")); });
 }
 
-function render(){ renderFeed(); renderPager(); }
+function render(){
+  renderFeed();
+  renderPager();
+  writeURLState();   // uppdatera adressen varje gång vi ritar
+}
 
 document.addEventListener("DOMContentLoaded", initFeed);
