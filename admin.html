@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cornelia Admin — Inlägg</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    body { background: #f9f5ef; color: #222; font-family: serif; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 2rem 1rem; }
+    .card { background:#fff; border:1px solid #e4d9cc; border-radius:12px; padding:1rem; margin-bottom:1rem; }
+    .row { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+    .btn { padding:.5rem .9rem; border:1px solid #e4d9cc; border-radius:10px; background:#fff; cursor:pointer; }
+    .btn.primary { border-color:#a63a3a; background:#a63a3a; color:#fff; }
+    input[type="text"] { padding:.5rem .6rem; border:1px solid #ddd; border-radius:8px; font:inherit; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { padding:.6rem .4rem; border-bottom:1px solid #eee; text-align:left; }
+    .muted { opacity:.75; font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="wrap">
+    <h1>Admin — Inlägg</h1>
+    <p class="muted">Hantera dina inlägg: skapa nytt eller redigera ett befintligt.</p>
+
+    <!-- Token + repo -->
+    <div class="card">
+      <div class="row">
+        <label for="token">GitHub token:</label>
+        <input id="token" type="text" placeholder="ghp_..." style="min-width:320px" />
+        <button id="saveToken" class="btn">Spara token</button>
+        <button id="clearToken" class="btn">Rensa token</button>
+        <span id="tokenStatus" class="muted"></span>
+      </div>
+      <div class="row">
+        <label for="owner">Owner:</label>
+        <input id="owner" type="text" value="cornelia-cs" />
+        <label for="repo">Repo:</label>
+        <input id="repo" type="text" value="cornelialoves" />
+        <button id="newPost" class="btn primary">+ Nytt inlägg</button>
+      </div>
+    </div>
+
+    <!-- Sök/filter -->
+    <div class="card">
+      <div class="row">
+        <input id="q" type="text" placeholder="Sök titel, taggar…" style="flex:1" />
+        <button id="reload" class="btn">Ladda om</button>
+        <span id="loadStatus" class="muted"></span>
+      </div>
+    </div>
+
+    <!-- Lista -->
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Titel</th>
+            <th>Datum</th>
+            <th>Taggar</th>
+            <th>URL</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p id="empty" class="muted" style="display:none">Inga inlägg hittades.</p>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <script src="/app.js" defer></script>
+  <script src="/admin.js" type="module"></script>
+</body>
+</html>
