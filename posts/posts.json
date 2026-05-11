@@ -1,24 +1,40 @@
 [
   {
+    "type": "post",
     "title": "Testing testing",
     "date": "2025-10-21",
     "url": "/arkiv/2025/10/test1.html",
     "tags": ["tjoho"],
-    "excerpt": "Skriveliskriv",
-    "contentHtml": "Skriveliskriv"
+    "contentHtml": "<p>Skriveliskriv. Här kan hela inlägget ligga direkt i flödet, inte bara en preview.</p><p>Du behöver alltså inte klicka dig vidare för att läsa. Inlägget visas som en egen stor vit yta på startsidan.</p>"
   },
   {
+    "type": "thought",
+    "date": "2025-10-20",
+    "initials": "C.S.",
+    "text": "Tänker på vad Mauro Scocco äter till middag",
+    "tags": ["tanke"]
+  },
+  {
+    "type": "post",
     "title": "Söndagsmorgon",
     "date": "2025-10-19",
     "url": "/arkiv/2025/10/sondagsmorgon.html",
-    "excerpt": "Kaffe, promenad och lite kod.",
-    "tags": ["vardag"]
+    "tags": ["vardag"],
+    "contentHtml": "<p>Kaffe, promenad och lite kod.</p><p>Det här är ett vanligt blogginlägg. Det får vara längre, ha flera stycken, bilder och kommentarer längst ner.</p>"
   },
   {
+    "type": "thought",
+    "date": "2025-10-18",
+    "initials": "C.S.",
+    "text": "Känner att hemsidor borde få vara lite som köksbord",
+    "tags": ["tanke"]
+  },
+  {
+    "type": "post",
     "title": "Hej bloggen",
     "date": "2025-10-17",
     "url": "/arkiv/2025/10/hej-bloggen.html",
-    "excerpt": "Första inlägget på nya strukturen. 🍓",
-    "tags": ["personligt", "intro"]
+    "tags": ["personligt", "intro"],
+    "contentHtml": "<p>Första inlägget på nya strukturen. 🍓</p><p>Nu är bloggen mer som ett flöde av både riktiga inlägg och små tankar. Det känns bättre än en vanlig blogglista med öppna-knappar.</p>"
   }
 ]

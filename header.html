@@ -1,18 +1,18 @@
 <header class="site-header">
-  <div class="container header-wrap">
-    <h1 class="logo-big">cornelia.love</h1>
+  <div class="header-wrap">
+    <a href="/" class="logo-big">cornelia.<em>love</em></a>
 
-    <nav class="main-nav">
-      <a href="/" class="nav-link pill">Posts</a>
+    <nav class="main-nav" aria-label="Huvudmeny">
+      <a href="/" class="nav-link pill">Inlägg</a>
 
-      <div class="filter">
-        <button id="monthBtn" class="btn ghost pill">Archive ▾</button>
-        <div id="monthMenu" class="menu"></div>
+      <div class="nav-dropdown filter">
+        <button id="monthBtn" class="nav-link pill dropdown-trigger" type="button">Arkiv</button>
+        <div id="monthMenu" class="archive-menu menu" aria-label="Arkiv"></div>
       </div>
 
-      <div class="filter">
-        <button id="tagBtn" class="btn ghost pill">Tags ▾</button>
-        <div id="tagMenu" class="menu"></div>
+      <div class="nav-dropdown filter">
+        <button id="tagBtn" class="nav-link pill dropdown-trigger" type="button">Ämnen</button>
+        <div id="tagMenu" class="tag-menu menu" aria-label="Ämnen"></div>
       </div>
     </nav>
 
