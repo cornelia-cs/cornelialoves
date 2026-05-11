@@ -168,3 +168,65 @@ footer {
   opacity: .7;
 }
 .overlay-close:hover { opacity: 1; }
+/* === Blog feed polish === */
+
+.home .card {
+  background: #fff;
+  border: 1px solid #d8d0c8;
+  padding: 34px 38px;
+  margin-bottom: 36px;
+  max-width: 720px;
+  box-shadow: none;
+}
+
+.home .card a,
+.home .card a:visited {
+  color: #111;
+  text-decoration: none;
+}
+
+.home .card a:hover {
+  font-style: italic;
+}
+
+.home .card h2,
+.home .card h2 a {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  color: #111;
+}
+
+.home .meta-line {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #333;
+  margin: 1rem 0 1.2rem;
+}
+
+.home .card p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #333;
+}
+
+.home .card .btn,
+.home .card button,
+.home .card a.btn {
+  border: 1px solid #111;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  padding: 7px 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home .card .btn.ghost,
+.home .card button.ghost {
+  background: #f4efe9;
+  color: #111;
+}

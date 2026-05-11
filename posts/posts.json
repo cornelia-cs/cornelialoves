@@ -1,41 +1,24 @@
 [
   {
-    "title": "tjohej",
-    "date": "2025-10-22",
-    "url": "/arkiv/2025/10/t.html",
-    "tags": [
-      "vardag"
-    ],
-    "excerpt": "hejhej",
-    "contentHtml": "<img src=\"/img/2025/10/1761140462043-f76ecc07fd20477e46367abfa7b880b4.jpg\" alt=\"\" />\nhejhej"
-  },
-  {
-    "title": "testing testing",
+    "title": "Testing testing",
     "date": "2025-10-21",
     "url": "/arkiv/2025/10/test1.html",
-    "tags": [
-      "tjoho"
-    ],
-    "excerpt": "skriveliskriv",
-    "contentHtml": "skriveliskriv"
+    "tags": ["tjoho"],
+    "excerpt": "Skriveliskriv",
+    "contentHtml": "Skriveliskriv"
   },
   {
-    "title": "SÃÂ¶ndagsmorgon",
+    "title": "Söndagsmorgon",
     "date": "2025-10-19",
     "url": "/arkiv/2025/10/sondagsmorgon.html",
     "excerpt": "Kaffe, promenad och lite kod.",
-    "tags": [
-      "vardag"
-    ]
+    "tags": ["vardag"]
   },
   {
     "title": "Hej bloggen",
     "date": "2025-10-17",
     "url": "/arkiv/2025/10/hej-bloggen.html",
-    "excerpt": "FÃÂ¶rsta inlÃÂ¤gget pÃÂ¥ nya strukturen. Ã°ÂÂÂ",
-    "tags": [
-      "personligt",
-      "intro"
-    ]
+    "excerpt": "Första inlägget på nya strukturen. 🍓",
+    "tags": ["personligt", "intro"]
   }
 ]
